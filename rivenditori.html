@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I nostri punti vendita</title>
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/stylemap.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900|Oswald:400,700">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/mediaelementplayer.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="css/fl-bigmug-line.css">
+
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!--CSS MAP-->
+    <style>
+        /* FINE CSS MAPA INTERATTIVO */
+    </style>
+    <!--FINE CSS MAP-->
+</head>
+
+<body>
+    <!-- MENU -->
+    <div style="margin-top: -10px;" class="site-wrap">
+        <div style="margin-top: -0.5rem!important;" class="site-navbar mt-4">
+            <div class="container py-1">
+                <div class="row align-items-center">
+                    <div class="col-8 col-md-8 col-lg-4">
+                        <h2 class="mb-0">
+                            <a href="index.html" class="text-white h2 mb-0"><img src="images/logo-w.png" width="100%"></a>
+                        </h2>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-8">
+                        <nav class="site-navigation text-right text-md-right" role="navigation">
+
+                            <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
+
+                            <ul class="site-menu js-clone-nav d-none d-lg-block">
+                                <li>
+                                    <a href="index.html">Home</a>
+                                </li>
+
+                                <li><a href="about.html">Chi siamo</a></li>
+
+                                <li><a href="prodotti.html">I Prodotti</a></li>
+
+                                <li><a href="contatti.html">Contatti</a></li>
+                                <li class="active"><a href="rivenditori.html">Rivenditori</a></li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-mobile-menu">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+    <!-- .site-mobile-menu -->
+
+    <!-- FINE MENU -->
+
+
+
+    <div class="sidebar">
+        <div class="heading">
+            <h1>RIVENDITORI</h1>
+            <p class="subtitle">I punti vendita dove potete trovare i nostro prodotti</p>
+        </div>
+        <div id="listings" class="listings"></div>
+    </div>
+    <div id="map" class="map"></div>
+    <!--INZIO SCRIPT MAPA-->
+    <script>
+        // COMPATIBILITA CON TUTTI NAVEGATORE // 
+        /* This will let you use the .remove() function later on */
+        if (!('remove' in Element.prototype)) {
+            Element.prototype.remove = function() {
+                if (this.parentNode) {
+                    this.parentNode.removeChild(this);
+                }
+            };
+        }
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoicGFzc2lvbmVzaWNpbGlhIiwiYSI6ImNrcG8zamRvcTI2NzAydm84aTV5ZXR5ZmYifQ.P7AJp6tzn--swPsMfqWu3Q';
+
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/light-v10',
+            center: [16.034084, 41.909671],
+            zoom: 5.5,
+            scrollZoom: true
+        });
+
+        var stores = {
+            "type": "FeatureCollection",
+            "features": [{
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.240202998134247,
+                            38.21895355851344
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "IL MONDO SENZA GLUTINE",
+                        "city": "VIA CAVOUR, 28 - 98057 MILAZZO (ME)",
+                        "country": "United States",
+                        "crossStreet": "at 15th St NW",
+                        "postalCode": "20005",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.267833698126417,
+                            37.82587439491608
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "PARAFARMACIA SCHISO",
+                        "city": "VIA ZARA, 15 - 98035 GIARDINI NAXOS (ME)",
+                        "country": "United States",
+                        "crossStreet": "at 22nd St NW",
+                        "postalCode": "20037",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.16544981162553,
+                            38.13472707425889
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "VOGLIABIO DI COSTANTINO VENERA",
+                        "city": "VIA BENEDETTINA INFERIORE, 33 - 98050 TERME VIGLIATORE  (ME)",
+                        "country": "United States",
+                        "crossStreet": "at Dupont Circle",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.552423669298333,
+                            38.206974120862846
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA BRANCATO ROMANINI",
+                        "city": "VIA REGINA MARGHERITA, 105/107 - 98121 MESSINA (ME)",
+                        "country": "United States",
+                        "crossStreet": "at 34th St NW",
+                        "postalCode": "20007",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.568721626970053,
+                            38.227376671225805
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA FACCIOLA' SNC",
+                        "city": "VIA CONSOLARE POMPEA, 155 - 98168 MESSINA (ME)",
+                        "country": "United States",
+                        "crossStreet": "btwn 2nd & 3rd Sts. SE",
+                        "postalCode": "20003",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.038880426957371,
+                            37.5916798072276
+                        ]
+                    },
+                    "properties": {
+                        "address": "FARMACIA CARAGLIANO SNC",
+                        "city": "VIA DEL BOSCO, 50 - 95030 MASCALUCIA (CT)",
+                        "country": "United States",
+                        "postalCode": "20740",
+                        "state": "MD"
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.04673125579151,
+                            37.51328218487466
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA NESIMA SRL",
+                        "cc": "US",
+                        "city": "VIA LEOPOLDO NOBILI, 3 - 95122 CATANIA (CT)",
+                        "country": "United States",
+                        "postalCode": "20814",
+                        "state": "MD"
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.094046869284584,
+                            37.51482901255308
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA DEI VIALI",
+                        "city": "CORSO ITALIA, 12 - 95129 CATANIA (CT)",
+                        "country": "United States",
+                        "crossStreet": "btw Explorer & Library",
+                        "postalCode": "20190",
+                        "state": "VA"
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.10598094045061,
+                            37.59979438814864
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA PORTALE",
+                        "city": "VIA GIUSEPPE GARIBALDI, 21 - 95020 ACI BONACCORSI (CT)",
+                        "country": "United States",
+                        "crossStreet": "at N Randolph St.",
+                        "postalCode": "22203",
+                        "state": "VA"
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.087698353941963,
+                            37.51553972976499
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "DI GREGORIO ANTONIO BIOCELIA",
+                        "city": "LARGO ROSOLINO PILO, 44 - 95128 CATANIA (CT)",
+                        "country": "United States",
+                        "postalCode": "19003",
+                        "state": "PA"
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.190254711617536,
+                            37.72877102036898
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA GRASSO DI GRASSO MARIA",
+                        "city": "CORSO ITALIA, 196 - 95014 GIARRE (CT)",
+                        "country": "United States",
+                        "postalCode": "19104",
+                        "state": "PA"
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.167514926957937,
+                            37.62031152875313
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "GARMACIA GALERMO SRL",
+                        "city": "CORSO ITALIA, 4/B - 95024 ACIREALE (CT)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            14.829657784630196,
+                            37.667755609802455
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA LOCASCIO",
+                        "city": "VIA DELLA REGIONE, 91 - 95031 ADRANO (CT)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            13.69021212696505,
+                            37.97879938825963
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "LA BOTTEGA DI CINZIA DI CARLO",
+                        "city": "VIA FALCONE BORSELLINO, 105/D - 90018 TERMINI IMERESE (PA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            13.504595569295775,
+                            38.0850760062425
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "GESCOM  / CELIACHIA POINT",
+                        "city": "VIA ORAZIO COSTANTINO, 20 - 90011 BAGHERIA (PA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            13.3514854558035,
+                            38.117704378652924
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA PORTA GUCCIA",
+                        "city": "VIA PORTA GUCCIA, 9 - 90134 PALERMO (PA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            13.333304811625672,
+                            38.141433642035686
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "MARTINA CALABRESE",
+                        "city": "VIA AQUILEIA, 28 - 90144 PALERMO (PA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            13.323930740461645,
+                            38.15906630124091
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FACES SRL",
+                        "city": "VIALE STRASBURGO, 442 - 90144 PALERMO (PA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            13.323842198131846,
+                            38.10055146512097
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "CELIACHIA BIO CENTER",
+                        "city": "CORSO CALATAFIMI, 622 - 90129 PALERMO (PA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            13.372432511624904,
+                            38.100986935191756
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "GESCOM CELIACHIA POINT",
+                        "city": "VIA FRANCESCO LA COLLA, 39 - 90124 PALERMO (PA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            13.117981069295185,
+                            38.04780330733503
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA FERRO",
+                        "city": "VIA ABBAZIA, 3 - 90047 PARTINICO (PA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            12.968205082786765,
+                            37.978501402928195
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA BENENATI",
+                        "city": "PIANO SANTA MARIA, 4 - 91011 ALCAMO (TP)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            12.546677240458894,
+                            38.01831203113801
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA DR. MICHELE DI VIA",
+                        "city": "VIA G. MARCONI, 10 - 91016 ERICE (TP)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.274227498111806,
+                            37.08102584726765
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "SANITARIA CARUSO",
+                        "city": "VIA CARLO FORLANINI, 16 - 96100 SIRACUSA (SR)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.296749282769252,
+                            37.083323615010215
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "PIZZUTO DANILO",
+                        "city": "VIALE TUNISI, 85/A  - 96100 SIRACUSA (SR)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.13606986927283,
+                            36.909823566147594
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA GALIONE SRL",
+                        "city": "VIA ROMA, 51  - 96012 AVOLA (SR)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.220932069279437,
+                            37.24798424769943
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "I SAPORI DEL CELIACO DI BALLISTRI",
+                        "city": "VIA ANTONIO GRAMSCI, 85  - 96011 AUGUSTA (SR)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            14.773822855778292,
+                            36.83278949937198
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA AMORE DI AMORE",
+                        "city": "VIA SORDA SAMPIERE, 5/A - 97015 MODICA (RG)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            14.53989368276672,
+                            36.95314245425193
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA CALI'",
+                        "city": "VIA GIUSEPPE GARIBALDI, 30 - 97019 VITTORIA (RG)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            14.254546269275805,
+                            37.064782080276146
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA CAMPISI SALVATORE",
+                        "city": "CORSO VITTORIO EMANUELE, 163 - 93012 GELA (CL)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            14.06010026928416,
+                            37.49374920443679
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "AMICO GIUSEPPE & C. SNC",
+                        "city": "VIA REDENTORE, 12 - 93100 CALTANISSETTA (CL)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            14.210225084618692,
+                            37.07877745183716
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA VARRICA  CROCE VERDE",
+                        "city": "VIALE CORTEMAGGIORE, 67 - 93012 GELA (CL)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            14.290339453942602,
+                            37.5475798256764
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA DEL CENTRO DR. INGRASCIOTTA",
+                        "city": "VIA TRANCHIDA, 10 - 94100 ENNA (EN)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            14.181801282847681,
+                            40.927420300812564
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "SENZA GLUTINE DI CICCARELLI ANTONIO",
+                        "city": "CORSO ANTONIO CAMPANO, 540 - 80014 GIUGLIANO IN CAMPANIA (NA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            12.14161294060504,
+                            44.76452831808619
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "IL MONDO SENZA GLUTINE DI MENEGATTI ANNA",
+                        "city": "PIAZZA VITTORIO VENETO, 17 - 44023 LAGOSANTO (FE)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.554982384640496,
+                            38.18500427355084,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA DEL VIALE DI FRANCESCA E SANTINO DI PERNA S.N.C.",
+                        "city": "VIALE SAN MARTINO, 56 - 98123 MESSINA (ME)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.53568461162601,
+                            38.15990247926968,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA GERMANA' MARIO",
+                        "city": "STRADA STATALE 114 - 98125 MESSINA (ME)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            14.634684726966862,
+                            38.06869648243677,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA SCIACCA RIZZO DEL DR. RIZZO GIUSEPPE",
+                        "city": "VIA GENERALE AURELIO LIOTTA, 7 - 98076 SANT'AGATA DI MILITELLO (ME)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            14.053191525105989,
+                            37.49649968661955,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "CELIACHIA FACILE DI MENDOLA S.R.L.S.",
+                        "city": "VIA F. DE ROBERTO 109/A - 93100 CALTANISSETTA (CL)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            14.05357866928421,
+                            37.49465941495372,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "PARAFARMACIA SANT'ANDREA DI SCARANTINO MARIA",
+                        "city": "VIA SAN GAETANO, 72 - 93017 SAN CATALDO (CL)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            11.148326769442377,
+                            44.839553547583606,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA BERTELLI DEL DOTT. GIAN LUIGI BERTELLI E C. SNC",
+                        "city": "VIA DEGLI ESTENSI, 187 - 41038 SAN FELICE SUL PANARO (MO)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            10.77235712710937,
+                            44.654257092405246,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "CI PIACE SENZA GLUTINE",
+                        "city": "VIA P. TOGLIATTI 2/5 - 42048 RUBIERA (RE)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            10.904208298273335,
+                            44.63803103463021,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "CI PIACE SENZA GLUTINE",
+                        "city": "VIA SCHIOCCHI, 26 - 41124 MODENA (MO)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            10.883974827112134,
+                            44.773280705649064,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "CI PIACE SENZA GLUTINE",
+                        "city": "VIA CIMABUE, 18 B/C/D - 410112 CARPI (MO)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            15.117853527162664,
+                            37.53428011336953
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "GRAN FARMACIA LA SCOGLIERA S.N.C. DI FARO EMILIA E MATILDE",
+                        "city": "VIA MEDEA, 11/B - 95126 CATANIA (CT)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            10.279903527356748,
+                            45.48109230612336
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMA & CO. S.R.L.",
+                        "city": "TRAVERSA I DI VIA PREFERITA, 2 - 25014 CASTENODOLO (BS)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            10.192831563940763,
+                            45.554189179360655
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "ZAMPEDRI GABRIELLA",
+                        "city": "VIA CHIUSURE, 103 - 25127 BRESCIA (BS)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            9.216887710160467,
+                            45.49539249041814
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "CELIACHIA MILANO FAZZARI DI FAZZARI NICOLAS E C. S.A.S.",
+                        "city": "VIA GIULIO E CORRADO VENINI, 91 - 20127 MILANO (MI)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            9.791336256200065,
+                            45.75638427740849
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "L'OASI DEL SENZA GLUTINE DI BATZELLA AVE MARIA",
+                        "city": "VIA GUGLIELMO MARCONI, 29 - 24021 ALBINO (BG)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            10.490741767831723,
+                            45.46145878020822
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "LA BOTTEGA DEI SANI SNC",
+                        "city": "VIA CESARE BATTISTI, 23/M - 25017 LONATO DEL GARDA (BS)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            9.755079540849588,
+                            45.519787359883594
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA FALETTI DEI DOTTORI DIEGO E SILVIO FALETTI S.N.C.",
+                        "city": "VIA ANTONIO TADINI, 16 - 24058 ROMANO DI LOMBARDIA (BG)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            9.154881456190598,
+                            45.39512192219228
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "NOCERINO MONICA",
+                        "city": "VIA MONVISO, 107 - 20089 ROZZANO (MI)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            18.160157898392185,
+                            40.35963320661161
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "GLUTEN FREE E BIO S.R.L.S.",
+                        "city": "VIA TARANTO, 111/E - 73100 LECCE (LE)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            17.119327440725506,
+                            40.58661652510153
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": 'FARMACIA "MASSARO" DI MASSARO VITA',
+                        "city": "CORSO ROMA, 87 - 74016 MASSAFRA (TA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            17.625864746854326,
+                            40.46958966116453,
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "BIOCELIA DADAMO ADDOLORATA COSIMA",
+                        "city": "VIA I MAGGIO, 30 - 74024 MANDURIA (TA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            17.931396083054302,
+                            40.62486612703972,
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "GLUTI...NO! DI BARBARA DE FRAIA & C. S.A.S.",
+                        "city": "VIA SANT'ANGELO, 53 - 72100 BRINDISI (BR)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            18.186209083047764,
+                            40.35099193047271
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA CASCIARO DEI DR. PAOLO E MARCELLA",
+                        "city": "VIA GENTILE 20 - 73100 LECCE (LE)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            18.161163605160937,
+                            40.01839353953272
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA CASCIARO MARIGLIANO",
+                        "city": "VIA CARLO MAGNO 36 - 73042 CASARANO (LE)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            17.227154581198604,
+                            40.490985904448024
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA CLEMENTE DR.GIULIANA",
+                        "city": "VIA RAIMONDELLO ORSINI, 76 - 74123 TARANTO (TA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            17.24769552723079,
+                            40.46606827653422
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "ROCADORO DI VILELLA CARMEN",
+                        "city": "VIALE DANTE ALIGHIERI, 64 - 73021 CALIMERA (LE)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            17.26183366955861,
+                            40.464555418954795
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "L'ISOLA SENZA GLUTINE S.N.C. DI MARANGI ANGELA & C.",
+                        "city": "VIA ORAZIO FLACCO, 119 - 74015 MARTINA FRANCA (TA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            11.044586698519456,
+                            45.43283535255284
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "GUSTO LIBERO di FORNALE STEFANO",
+                        "city": "VIA PORTO SAN PANCRAZIO, 4/B - 37133 VERONA (VR)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            9.138847571157221,
+                            45.500002577920554
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "20PPM S.R.L.",
+                        "city": "VIA LUDOVICO DI BREME 50 - 20145 MILANO (MI)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            8.919180555819151,
+                            45.60800161698315,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "DISPENSA SENZA GLUTINE S.R.L.",
+                        "city": "VIA CESARE BATTISTI 36 - 20025 LEGNANO (MI)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            9.925418584649394,
+                            45.40782499187254,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "NATURALMENTE DI PRANDOLINI BRUNO",
+                        "city": "VIA FRANCESCA, 11 - 25034 ORZINUOVI (BS)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            10.045619426972472,
+                            45.14262582978753,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "LA BOTTEGA DI MAX DI SANTINI ERMINIO",
+                        "city": "VIA NINO BIXIO, 26 - 26100 CREMONA (CR)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            9.666718071161723,
+                            45.68248197656941,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "CELIACHIA POINT BERGAMO",
+                        "city": "VIA SPINO 33/A - 24126 BERGAMO (BG)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            9.688945298150953,
+                            45.695860629100615,
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "BERGAMO SENZA GLUTINE",
+                        "city": "VIALE PIROVANO 4/B - 24125 BEGAMO (BG)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            9.716309069315539,
+                            45.68640656447573,
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "ARCOBALENO DEI SAPORI S.A.S. DI MOIRA BARCELLA E C.",
+                        "address": "VIA TRILUSSA, 6 - 24068 SERIATE (BG)",
+                        "city": "",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            17.287639713380003,
+                            40.95817563921493,
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "CELIACHIASTORE DI GALANTO PATRIZIA",
+                        "city": "VIA OTTAVIANO ZARA, 5-7 - 70043 MONOPOLI (BA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            18.04059038453321,
+                            40.43549000339254,
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA VALZANO S.N.C. DI GIUSEPPE VALZANO & C.",
+                        "city": "VIA BRINDISI, 52 - 73018 SQUINZANO (LE)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            17.635335099878265,
+                            40.628889116251386,
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "BIOCELIA DI ANNA MARIA DE PASQUALE",
+                        "city": "VIA GIACOMO PUCCINI, 52 - 72018 SAN MICHELE SALENTINO (BR)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            17.22472398454565,
+                            40.993567118115934,
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "CELIAPOINT DI DE LAURENTIS ANDREA",
+                        "city": "PIAZZA SANT'ANTONIO, 12 - 70044 POLIGNANO A MARE (BA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            11.27095474047316,
+                            45.39560756347224,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FACCILIACI DI FACCIO PAOLA",
+                        "city": "PIAZZETTA DALLI CANI, 4 - 37047 SAN BONIFACIO (VR)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            11.425779025134988,
+                            45.50137069313537,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FACCILIACI DI FACCIO PAOLA",
+                        "city": "PIAZZA G. CARLI, 1 - 36075 MONTECCHIO MAGGIORE (VI)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            11.047819269307963,
+                            45.38055316095187,
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA COSSATER DOTT. ROBERTO ",
+                        "city": "PIAZZA UMBERTO I, 120 - 37057 SAN GIOVANNI LUPATOTO (VR)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            9.117600840331107,
+                            39.22881709653447,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIE PIGA DI CORRADO MASCIA & C. S.A.S.",
+                        "city": "VIA LIGURIA,  14 - 09127 CAGLIARI (CA)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            8.57773594036353,
+                            40.714370790246534,
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA MASALA S.N.C. DI ANTONIO E ALBERTO MASALA",
+                        "city": "VIA CARLO FORLANINI, 33 - 07100 SASSARI (SS)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            10.325305240428774,
+                            43.558765275668,
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "ZERO GLUTINE PIU' SALUTE",
+                        "city": "PIAZZA BARRIERA GARIBALDI, 29/34 - 57122 LIVORNO (LI)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            10.30869331159328,
+                            43.546629418990086,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "LUPI SRL",
+                        "city": "PIAZZA SANTI PIETRO E PAOLO, 6 - 57126 LIVORNO (LI)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            10.32897978460454,
+                            43.55408876374061,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA FARNETI S.A.S.",
+                        "city": "VIALE GIOSUE' CARDUCCI, 195 - 57121 LIVORNO (LI)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            10.48083342510027,
+                            44.07484188580912,
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "FARMACIA SIMONINI DR. ENZO",
+                        "city": "FARMACIA SIMONINI DR. ENZO - 55051 BARGA (LU)",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                    // SPAZIO BIANCO
+                }, {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+
+                        ]
+                    },
+                    "properties": {
+                        "phoneFormatted": "",
+                        "phone": "",
+                        "address": "",
+                        "city": "",
+                        "country": "United States",
+                        "crossStreet": "at 19th St",
+                        "postalCode": "20036",
+                        "state": "D.C."
+                    }
+                },
+
+            ]
+        };
+
+        /* Assign a unique ID to each store */
+        stores.features.forEach(function(store, i) {
+            store.properties.id = i;
+        });
+
+        //AZIONE QUANDO IL UTENTE FA CLICK SU LA TIENDA 
+
+        // map.on('click', function (e) {
+        //     /* Determine if a feature in the "locations" layer exists at that point. */
+        //     var features = map.queryRenderedFeatures(e.point, {
+        //         layers: ['locations']
+        //     });
+
+        //     /* If yes, then: */
+        //     if (features.length) {
+        //         var clickedPoint = features[0];
+
+        //         /* Fly to the point */
+        //         flyToStore(clickedPoint);
+
+        //         /* Close all other popups and display popup for clicked store */
+        //         createPopUp(clickedPoint);
+
+        //         /* Highlight listing in sidebar (and remove highlight for all other listings) */
+        //         var activeItem = document.getElementsByClassName('active');
+        //         if (activeItem[0]) {
+        //             activeItem[0].classList.remove('active');
+        //         }
+        //         var listing = document.getElementById('listing-' + clickedPoint.properties.id);
+        //         listing.classList.add('active');
+        //     }
+        // });
+
+
+
+        map.on('load', function(e) {
+            /* Add the data to your map as a layer */
+            map.addSource('places', {
+                type: 'geojson',
+                data: stores
+            });
+            buildLocationList(stores);
+            addMarkers();
+        });
+
+        //ICONO PERSONALIZATO
+
+        function addMarkers() {
+            /* For each feature in the GeoJSON object above: */
+            stores.features.forEach(function(marker) {
+                /* Create a div element for the marker. */
+                var el = document.createElement('div');
+                /* Assign a unique `id` to the marker. */
+                el.id = "marker-" + marker.properties.id;
+                /* Assign the `marker` class to each marker for styling. */
+                el.className = 'marker';
+
+                /**
+                 * Create a marker using the div element
+                 * defined above and add it to the map.
+                 **/
+                new mapboxgl.Marker(el, {
+                        offset: [0, -23]
+                    })
+                    .setLngLat(marker.geometry.coordinates)
+                    .addTo(map);
+
+                el.addEventListener('click', function(e) {
+                    /* Fly to the point */
+                    flyToStore(marker);
+                    /* Close all other popups and display popup for clicked store */
+                    createPopUp(marker);
+                    /* Highlight listing in sidebar */
+                    var activeItem = document.getElementsByClassName('active');
+                    e.stopPropagation();
+                    if (activeItem[0]) {
+                        activeItem[0].classList.remove('active');
+                    }
+                    var listing = document.getElementById('listing-' + marker.properties.id);
+                    listing.classList.add('active');
+                });
+            });
+        }
+
+        function buildLocationList(data) {
+            data.features.forEach(function(store, i) {
+                /**
+                 * Create a shortcut for `store.properties`,
+                 * which will be used several times below.
+                 **/
+                var prop = store.properties;
+
+                /* Add a new listing section to the sidebar. */
+                var listings = document.getElementById('listings');
+                var listing = listings.appendChild(document.createElement('div'));
+                /* Assign a unique `id` to the listing. */
+                listing.id = "listing-" + data.features[i].properties.id;
+                /* Assign the `item` class to each listing for styling. */
+                listing.className = 'item';
+
+                /* Add the link to the individual listing created above. */
+                var link = listing.appendChild(document.createElement('a'));
+                link.href = '#';
+                link.className = 'title';
+                link.id = "link-" + prop.id;
+                link.innerHTML = prop.address;
+
+                /* Add details to the individual listing. */
+                var details = listing.appendChild(document.createElement('div'));
+                details.innerHTML = prop.city;
+                if (prop.phone) {
+                    details.innerHTML += ' · ' + prop.phoneFormatted;
+                }
+                if (prop.distance) {
+                    var roundedDistance = Math.round(prop.distance * 100) / 100;
+                    details.innerHTML +=
+                        '<p><strong>' + roundedDistance + ' miles away</strong></p>';
+                }
+                // AZIONE QUANDO IL UTENTE FA CLICK SU LA BARRA LATERALE
+                link.addEventListener('click', function(e) {
+                    for (var i = 0; i < data.features.length; i++) {
+                        if (this.id === "link-" + data.features[i].properties.id) {
+                            var clickedListing = data.features[i];
+                            flyToStore(clickedListing);
+                            createPopUp(clickedListing);
+                        }
+                    }
+                    var activeItem = document.getElementsByClassName('active');
+                    if (activeItem[0]) {
+                        activeItem[0].classList.remove('active');
+                    }
+                    this.parentNode.classList.add('active');
+                });
+            });
+        }
+        // INIZIO MAPPA INTERATTIVO 
+        function flyToStore(currentFeature) {
+            map.flyTo({
+                center: currentFeature.geometry.coordinates,
+                zoom: 15
+            });
+        }
+
+        function createPopUp(currentFeature) {
+            var popUps = document.getElementsByClassName('mapboxgl-popup');
+            /** Check if there is already a popup on the map and if so, remove it */
+            if (popUps[0]) popUps[0].remove();
+
+            var popup = new mapboxgl.Popup({
+                    closeOnClick: false
+                })
+                .setLngLat(currentFeature.geometry.coordinates)
+                .setHTML('<h3 class="titlepopup">' + currentFeature.properties.address + '</h3>' +
+                    '<h4 class="popupmap"><strong>Indirizzo:</strong><br> ' + currentFeature.properties.city + '</h4>')
+                .addTo(map);
+        }
+        // FINE MAPPA INTERATTIVO
+    </script>
+    <!--FINE SCRIPT MAPA-->
+</body>
+
+</html>
